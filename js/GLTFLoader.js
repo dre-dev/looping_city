@@ -1,58 +1,29 @@
-/**
- * @author Rich Tibbett / https://github.com/richtr
- * @author mrdoob / http://mrdoob.com/
- * @author Tony Parisi / http://www.tonyparisi.com/
- * @author Takahiro / https://github.com/takahirox
- * @author Don McCurdy / https://www.donmccurdy.com
- */
-
 THREE.GLTFLoader = ( function () {
-
 	function GLTFLoader( manager ) {
-
 		this.manager = ( manager !== undefined ) ? manager : THREE.DefaultLoadingManager;
 		this.dracoLoader = null;
-
 	}
 
 	GLTFLoader.prototype = {
-
 		constructor: GLTFLoader,
-
 		crossOrigin: 'anonymous',
-
 		load: function ( url, onLoad, onProgress, onError ) {
-
 			var scope = this;
-
 			var path = this.path !== undefined ? this.path : THREE.LoaderUtils.extractUrlBase( url );
-
 			var loader = new THREE.FileLoader( scope.manager );
-
 			loader.setResponseType( 'arraybuffer' );
-
 			loader.load( url, function ( data ) {
-
+				
 				try {
-
 					scope.parse( data, path, onLoad, onError );
-
 				} catch ( e ) {
-
 					if ( onError !== undefined ) {
-
 						onError( e );
-
 					} else {
-
 						throw e;
-
 					}
-
 				}
-
 			}, onProgress, onError );
-
 		},
 
 		setCrossOrigin: function ( value ) {
